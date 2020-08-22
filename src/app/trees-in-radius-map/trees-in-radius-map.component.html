@@ -1,0 +1,66 @@
+<ActionBar title="header" class="header">
+    <StackLayout orientation="horizontal"
+      ios:horizontalAlignment="center"
+      android:horizontalAlignment="center"
+      class="header">
+      <WrapLayout>
+        <Image src="res://icon_giessdenkiez" width="30" height="30" class="action-image"></Image>
+        <Label text="Gieß dein " class="action-label"></Label>
+        <Label text="Viertel" class="action-label green"></Label>
+      </WrapLayout>
+    </StackLayout>
+</ActionBar>
+
+<GridLayout rows="*, auto" width="100%">
+  <AbsoluteLayout row="0" orientation="vertical">
+    <ContentView height="100%" width="100%">
+      <Mapbox
+          [accessToken]="config.env.MAP_BOX_TOKEN"
+          mapStyle="traffic_day"
+          hideCompass="true"
+          zoomLevel="0"
+          [showUserLocation]="showUserLocation"
+          disableZoom="false"
+          disableRotation="false"
+          disableScroll="false"
+          disableTilt="false"
+          (mapReady)="onMapReady($event)">
+      </Mapbox>
+    </ContentView>
+  </AbsoluteLayout>
+
+  <StackLayout #bottomElt row="0" orientation="vertical" width="90%" margin="10" class="box-shadow">
+
+    <ng-container *ngIf="!isTreeSelected()">
+      <Label test="" height="80%"></Label>
+
+      <StackLayout orientation="horizontal" height="10%" class="overlay-container" >
+
+        <FlexboxLayout width="25%" flexWrap="wrap" alignContent="flex-start" >
+          <Label text="Umkreis   " class="title"></Label>
+          <Label [text]="viewRadius" class="subtitle"></Label>
+          <Label text="m" class="subtitle"></Label>
+        </FlexboxLayout>
+
+        <Slider
+            width="75%"
+            [value]="viewRadius"
+            minValue="10"
+            horizontalAlignment="stretch"
+            maxValue="250"
+            class="slider"
+            [selectedBackgroundColor]="sliderSelectedBgColor"
+            (valueChange)="onSliderValueChange($event)"
+            margin="5">
+          </Slider>
+
+      </StackLayout>
+    </ng-container>
+
+    <ng-container *ngIf="isTreeSelected()">
+      <TreeDetail [tree]="selectedTree" (onClose)="onClose()"></TreeDetail>
+    </ng-container>
+
+  </StackLayout>
+
+</GridLayout>

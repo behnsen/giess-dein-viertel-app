@@ -1,0 +1,39 @@
+/* Add mobile styles for the component here.  */
+
+/* Add mobile styles for the component here.  */
+
+.overlay-container {
+    background-color: white;
+    width: 100%;
+    margin: 5;
+    padding: 15;
+}
+
+.title {
+    font-weight: 700;
+}
+
+.subtitle {
+    color: #aaa;
+}
+
+.margin {
+    margin: 10;
+}
+
+.image-btn {
+    width: 150;
+    height: 150;
+}
+
+.btn-rounded {
+    background-color: rgb(55, 222, 138);
+    android-elevation: 0;
+    padding: 10;
+    border-radius: 30;
+    color: white;
+    text-align: center;
+    font-weight: 700;
+    margin: 10;
+
+}

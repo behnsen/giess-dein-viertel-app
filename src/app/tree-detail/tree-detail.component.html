@@ -1,0 +1,30 @@
+<Label test="" height="55%"></Label>
+
+<StackLayout orientation="vertical" height="35%" class="overlay-container" >
+
+  <GridLayout alignSelf="flex-start" rows="auto" columns="*">
+    <Label horizontalAlignment="left" [text]="tree?.artDtsch" class="title"></Label>
+
+    <Image horizontalAlignment="right"
+      (tap)="closeWasTapped()"
+      src="res://cross"
+      width="30"
+      height="30">
+    </Image>
+
+  </GridLayout>
+
+  <FlexboxLayout flexWrap="wrap" alignContent="flex-end" class="margin">
+    <Image *ngFor="let can of cans"
+        class="can"
+        [src]="can === 1 ? 'res://icon_water' : 'res://icon_water_grey'"
+        width="30"
+        height="30">
+    </Image>
+  </FlexboxLayout>
+
+  <Label [text]="tree?.strName + '/' + tree?.bezirk" class="subtitle"></Label>
+
+  <Label (tap)="onWaterTap()" text="Gießen" class="btn-rounded"></Label>
+
+</StackLayout>
