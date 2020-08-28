@@ -45,18 +45,22 @@ export class TreeService {
     return this._ngZone.run(() => this.http.get(url));
   }
 
+  // URL_TREES_WATERED=https://leipzig-trees-express-now.vercel.app
+  //https://leipzig-trees-express-now.vercel.app/get?queryType=byid&id=id-12735
   getTreeLastWatered(id: string) {
     let url = this.config.env.URL_TREES_WATERED;
-    url += '/get-tree-last-watered';
+    url += '/get';
 
     let params = new HttpParams()
+      .append('queryType', 'lastwatered')
       .append('id', id);
 
     return this._ngZone.run(() =>
       this.http
-        .get<TreeWatered[]>(url, { params })
-        .pipe(map(watered =>
-          watered.map(w => new TreeLastWatered(w)))));
+        .get(url, { params })
+        .pipe(map((response: any) =>
+          response.data))
+        .pipe(map(data => data.map(w => new TreeLastWatered(w)))));
   }
 
   getNonWateredTrees(): Observable<any> {
@@ -66,23 +70,22 @@ export class TreeService {
     return forkJoin(...tasks$);
   }
 
-  getTreeDetails(id: string) {
+  getTreeDetails(id: string): Observable<TreeDetail> {
 
     let url = this.config.env.URL_TREES_WATERED;
-    url += '/get-tree';
-
+    url += '/get';
     let params = new HttpParams()
+      .append('queryType', 'byid')
+      .append("floatLatLng", "true")
       .append('id', id);
 
-    return this._ngZone.run(() => this.http.get(url, { params }).pipe(map((tree: any) => {
-
-      let lng = tree.lng;
-      let lat = tree.lat;
-      tree.lng = lat;
-      tree.lat = lng;
-      return tree;
-
-    })).pipe(map(tree => new TreeDetail(tree))));
+    return this._ngZone.run(() =>
+      this.http
+        .get(url, { params })
+        .pipe(map((result: any) => {
+          let trees: any[] = result.data;
+          let mappedTrees = trees.map(d => new TreeDetail(d));
+          return mappedTrees?.[0];})));
   }
 
   getTreeDetailsWithWater(id: string) {
@@ -139,8 +142,8 @@ export class TreeService {
 
             let finalTree = new Tree();
             finalTree.id = item[0];
-            finalTree.lng = item[1];
-            finalTree.lat = item[2];
+            finalTree.lat = item[1];
+            finalTree.lng = item[2];
             finalTree.radolan_sum = item[3];
             finalTree.age = item[4];
             result.push(finalTree);

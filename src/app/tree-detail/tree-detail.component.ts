@@ -9,7 +9,12 @@ import { TreeDetail } from '../services/tree.service';
 export class TreeDetailComponent implements OnInit {
 
   _tree: TreeDetail = null;
-  cans: number[] = [0,0,0,0,0];
+  cans = [
+    {id: 0, value: 0},
+    {id: 1, value: 0},
+    {id: 2, value: 0},
+    {id: 3, value: 0},
+    {id: 4, value: 0}];
 
   @Input()
   set tree(tree: TreeDetail) {
@@ -32,7 +37,12 @@ export class TreeDetailComponent implements OnInit {
   }
 
   getCans(tree: TreeDetail) {
-    const cans = [0,0,0,0,0];
+    const cans = [
+      {id: 0, value: 0},
+      {id: 1, value: 0},
+      {id: 2, value: 0},
+      {id: 3, value: 0},
+      {id: 4, value: 0}];
     const squareMeters = 3;
     const literDailyNeed = 7;
 
@@ -44,19 +54,19 @@ export class TreeDetailComponent implements OnInit {
       let relation = (rainLiter + additionalLiter)/liter30DaysNeed;
 
       if(relation > 0.2) {
-        cans[0] = 1;
+        cans[0].value = 1;
       }
       if(relation > 0.4) {
-        cans[1] = 1;
+        cans[1].value = 1;
       }
       if(relation > 0.6) {
-        cans[2] = 1;
+        cans[2].value = 1;
       }
       if(relation > 0.8) {
-        cans[3] = 1;
+        cans[3].value = 1;
       }
       if(relation > 1.0) {
-        cans[4] = 1;
+        cans[4].value = 1;
       }
 
     } catch(e) {

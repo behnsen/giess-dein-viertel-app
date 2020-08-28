@@ -16,8 +16,9 @@
 
   <FlexboxLayout flexWrap="wrap" alignContent="flex-end" class="margin">
     <Image *ngFor="let can of cans"
+        [id]="can.id"
         class="can"
-        [src]="can === 1 ? 'res://icon_water' : 'res://icon_water_grey'"
+        [src]="can.value === 1 ? 'res://icon_water' : 'res://icon_water_grey'"
         width="30"
         height="30">
     </Image>
